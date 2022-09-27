@@ -1,4 +1,5 @@
 const { LoginService } = require('../services');
+const { generateToken } = require('../middlewares/generate.token');
 
 const getByEmail = async (req, res) => {
   const { email, password } = req.body;
@@ -7,7 +8,8 @@ const getByEmail = async (req, res) => {
     return res.status(400).json({ message: 'Invalid fields' });
   }
   console.log('gerar o token');
-  return res.status(200).json(user);
+  const token = generateToken(email);
+  return res.status(200).json({ token });
 };
 
 module.exports = {
