@@ -1,6 +1,7 @@
 const { User } = require('../models');
 
 const getByEmail = async (email) => {
+  console.log('cheguei no service');
   const user = await User.findOne({ where: { email } });
   return user;
 };
