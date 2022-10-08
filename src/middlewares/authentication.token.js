@@ -13,7 +13,6 @@ const authToken = async (req, res, next) => {
     const decoded = jwt.verify(token, secret);
     const { email } = decoded;
     const user = await UserService.getByEmail(email);
-    console.log(user);
     if (user.dataValues.email !== email) {
       return res.status(401).json({ message: 'Expired or invalid token' });
     }
