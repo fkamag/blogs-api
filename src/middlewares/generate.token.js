@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secret = process.env.JWT_SECRET || 'batatinha123';
+const secret = process.env.JWT_SECRET;
 
 const jwtConfig = {
   expiresIn: '7d',

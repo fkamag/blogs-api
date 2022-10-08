@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    display_name: {
+    displayName: {
       type: DataTypes.STRING,
     },
     email: {
@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     timestamps: false,
+    underscored: true,
     tableName: 'users'
   });
 
