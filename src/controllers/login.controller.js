@@ -7,7 +7,6 @@ const getByEmail = async (req, res) => {
   if (!user) {
     return res.status(400).json({ message: 'Invalid fields' });
   }
-  console.log('gerar o token');
   const token = generateToken(email);
   return res.status(200).json({ token });
 };

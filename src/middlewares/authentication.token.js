@@ -16,6 +16,7 @@ const authToken = async (req, res, next) => {
     if (user.dataValues.email !== email) {
       return res.status(401).json({ message: 'Expired or invalid token' });
     }
+    req.user = user;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Expired or invalid token' });
