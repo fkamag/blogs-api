@@ -5,11 +5,11 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
     { title, content, userId },
   );
   await Promise.all(categoryIds.map(
-    (categoryId) => PostCategory.create(
+    async (categoryId) => PostCategory.create(
       { postId: newPost.dataValues.id, categoryId },
     ),
   ));
-  return newPost.dataValues;
+  return newPost;
 };
 
 module.exports = {
