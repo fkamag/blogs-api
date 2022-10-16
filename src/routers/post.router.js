@@ -10,4 +10,6 @@ router.post('/', authToken, postValidation, categoryValidation, PostController.c
 
 router.get('/', authToken, PostController.getAll);
 
+router.get('/:id', authToken, PostController.getById);
+
 module.exports = router;
