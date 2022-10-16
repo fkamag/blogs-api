@@ -54,10 +54,30 @@ const deleteById = async (id) => {
   return removed;
 };
 
+const searchPost = async (q) => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories' },
+    ],
+  });
+  if (!q) return posts;
+  console.log(posts);
+//   const { content } = await PostService.searchPost();
+  const result = [];
+  const result1 = posts.filter((item) => item.title.includes(q));
+  console.log(result1);
+  result.push(result1);
+  const result2 = posts.filter((item) => item.content.includes(q));
+  result.push(result2);
+  console.log(result);
+};
+
 module.exports = {
   createPost,
   getAll,
   getById,
   putById,
   deleteById,
+  searchPost,
 };
