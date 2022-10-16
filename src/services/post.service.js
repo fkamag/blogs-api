@@ -1,4 +1,9 @@
+const Sequelize = require('sequelize');
+
+const { Op } = Sequelize;
 const { BlogPost, PostCategory, User, Category } = require('../models');
+// https://stackoverflow.com/questions/53971268/node-sequelize-find-where-like-wildcard
+// https://stackoverflow.com/questions/20695062/sequelize-or-condition-object
 
 const createPost = async ({ title, content, categoryIds, userId }) => {
   const newPost = await BlogPost.create(
@@ -55,22 +60,22 @@ const deleteById = async (id) => {
 };
 
 const searchPost = async (q) => {
-  const posts = await BlogPost.findAll({
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories' },
-    ],
+  if (q === '') {
+    const posts = await BlogPost.findAll({ include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories' },
+      ],
+    });
+    return posts;
+  }
+  const result = await BlogPost.findAll({
+    where: { [Op.or]: { title: { [Op.like]: `%${q}%` }, content: { [Op.like]: `%${q}%` } } },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories' },
+      ],
   });
-  if (!q) return posts;
-  console.log(posts);
-//   const { content } = await PostService.searchPost();
-  const result = [];
-  const result1 = posts.filter((item) => item.title.includes(q));
-  console.log(result1);
-  result.push(result1);
-  const result2 = posts.filter((item) => item.content.includes(q));
-  result.push(result2);
-  console.log(result);
+  return result;
 };
 
 module.exports = {
